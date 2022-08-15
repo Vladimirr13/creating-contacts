@@ -6,6 +6,7 @@ import Spinner from '../../components/Base/Spinner';
 import { toast } from 'react-toastify';
 import AuthorizationService from '../../services/AuthorizationService';
 import UserService from '../../services/UserService';
+import { handleValidEmail, handleValidPassword } from '../../helpers/fieldsValidate';
 
 const AuthorizationForm: React.FC = () => {
   const { setToken, initLoggedIn } = AuthorizationService;
@@ -15,7 +16,7 @@ const AuthorizationForm: React.FC = () => {
     const { value, name } = event.target;
     setFormValues((prevState) => {
       const localValues = { ...prevState, [name]: value.trim() };
-      validate(localValues, name);
+      isValid(localValues, name);
       return { ...localValues };
     });
   };
@@ -30,7 +31,7 @@ const AuthorizationForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    if (!validate(formValues, 'all')) {
+    if (!isValid(formValues, 'all')) {
       return;
     }
     try {
@@ -52,25 +53,17 @@ const AuthorizationForm: React.FC = () => {
       setLoading(false);
     }
   };
-  const validate = (values: IAuthUserData, fieldName: string): boolean => {
+  const isValid = (values: IAuthUserData, fieldName: string): boolean => {
     const errorsValues: IAuthUserData = {
       email: '',
       password: '',
     };
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
     if (fieldName === 'email' || fieldName === 'all') {
-      if (values.email === '') {
-        errorsValues.email = 'Не может быть пустым';
-      } else if (!regex.test(values.email)) {
-        errorsValues.email = 'Неверный формат электронной почты';
-      }
+      errorsValues.email = handleValidEmail(values.email);
     }
     if (fieldName === 'password' || fieldName === 'all') {
-      if (values.password === '') {
-        errorsValues.password = 'Не может быть пустым';
-      } else if (values.password.length < 4) {
-        errorsValues.password = 'Пароль должен содержать минимум 4 символа';
-      }
+      errorsValues.password = handleValidPassword(values.password, 5);
     }
 
     const foundErrorsValues = Object.keys(errorsValues).find(
@@ -113,7 +106,7 @@ const AuthorizationForm: React.FC = () => {
         </div>
         <div className="authorization__button">
           <button className="main-button" disabled={loading}>
-            {loading ? <Spinner /> : 'Отправить'}
+            {loading ? <Spinner /> : 'Войти'}
           </button>
         </div>
       </form>

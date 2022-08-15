@@ -21,7 +21,7 @@ const Authorization: React.FC = () => {
     if (loggedIn) {
       history.push(RoutesEnum.MAIN);
     }
-  }, []);
+  }, [loggedIn, history]);
 
   return (
     <div className="authorization">

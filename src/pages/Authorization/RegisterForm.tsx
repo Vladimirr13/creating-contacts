@@ -5,6 +5,12 @@ import Spinner from '../../components/Base/Spinner';
 import { toast } from 'react-toastify';
 import AuthorizationService from '../../services/AuthorizationService';
 import UserService from '../../services/UserService';
+import {
+  handleValidConfirmPassword,
+  handleValidEmail,
+  handleValidName,
+  handleValidPassword,
+} from '../../helpers/fieldsValidate';
 
 const RegisterForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,7 +20,7 @@ const RegisterForm: React.FC = () => {
     const { value, name } = event.target;
     setFormValues((prevState) => {
       const localValues = { ...prevState, [name]: value.trim() };
-      validate(localValues, name);
+      isValid(localValues, name);
       return { ...localValues };
     });
   };
@@ -33,7 +39,7 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    if (!validate(formValues, 'all')) {
+    if (!isValid(formValues, 'all')) {
       return;
     }
     try {
@@ -62,41 +68,29 @@ const RegisterForm: React.FC = () => {
       setLoading(false);
     }
   };
-  const validate = (values: IRegisterUserData, fieldName: string): boolean => {
+  const isValid = (values: IRegisterUserData, fieldName: string): boolean => {
     const errorsValues: IRegisterUserData = {
       email: '',
       name: '',
       password: '',
       confirmPassword: '',
     };
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     if (fieldName === 'name' || fieldName === 'all') {
-      if (values.name === '') {
-        errorsValues.name = 'Не может быть пустым';
-      }
+      errorsValues.name = handleValidName(values.name);
     }
 
     if (fieldName === 'email' || fieldName === 'all') {
-      if (values.email === '') {
-        errorsValues.email = 'Не может быть пустым';
-      } else if (!regex.test(values.email)) {
-        errorsValues.email = 'Неверный формат электронной почты';
-      }
+      errorsValues.email = handleValidEmail(values.email);
     }
     if (fieldName === 'password' || fieldName === 'all') {
-      if (values.password === '') {
-        errorsValues.password = 'Не может быть пустым';
-      } else if (values.password.length < 4) {
-        errorsValues.password = 'Пароль должен содержать минимум 4 символа';
-      }
+      errorsValues.password = handleValidPassword(values.password, 5);
     }
     if (fieldName === 'confirmPassword' || fieldName === 'all') {
-      if (values.confirmPassword === '') {
-        errorsValues.confirmPassword = 'Не может быть пустым';
-      } else if (values.confirmPassword !== values.password) {
-        errorsValues.confirmPassword = 'Пароль должен совпадать';
-      }
+      errorsValues.confirmPassword = handleValidConfirmPassword(
+        values.confirmPassword,
+        values.password,
+      );
     }
 
     const foundErrorsValues = Object.keys(errorsValues).find(
@@ -165,7 +159,7 @@ const RegisterForm: React.FC = () => {
         </div>
         <div className="authorization__button">
           <button className="main-button" disabled={loading}>
-            {loading ? <Spinner /> : 'Отправить'}
+            {loading ? <Spinner /> : 'Зарегистрироваться'}
           </button>
         </div>
       </form>

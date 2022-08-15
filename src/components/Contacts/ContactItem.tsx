@@ -12,7 +12,8 @@ import Spinner from '../Base/Spinner';
 import { toast } from 'react-toastify';
 import { StatusEventsContactsEnum } from '../../api/interfaces/IContacts';
 import { observer } from 'mobx-react';
-import isEqual from '../../helpers/isEqual';
+import isEqual from 'lodash/isEqual';
+import { handleValidEmail, handleValidName, handleValidPhone } from '../../helpers/fieldsValidate';
 
 interface IFormInputContact {
   firstName: string;
@@ -75,7 +76,7 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
       return;
     }
 
-    if (!validate(formValues)) {
+    if (!isValid(formValues, 'all')) {
       return;
     }
     try {
@@ -107,11 +108,11 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
     }
     setFormValues((prevState) => {
       const localValues = { ...prevState, [name]: value.trim() };
-      validate(localValues);
+      isValid(localValues, name);
       return { ...localValues };
     });
   };
-  const validate = (values: IContactsData): boolean => {
+  const isValid = (values: IContactsData, fieldName: string): boolean => {
     const errorsValues: IFormInputContact = {
       firstName: '',
       middleName: '',
@@ -119,21 +120,22 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
       phone: '',
       email: '',
     };
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
-    for (const key in values) {
-      if (values[key as keyof IContactsData] === '') {
-        errorsValues[key as keyof IFormInputContact] = 'Не может быть пустым';
-      } else if (key === 'email') {
-        if (!regex.test(values.email)) {
-          errorsValues.email = 'Неверный формат электронной почты';
-        }
-      } else if (key === 'phone') {
-        if (values.phone?.length < 8) {
-          errorsValues.phone = 'телефон должен состоять из 8 цифр';
-        }
-      }
+    if (fieldName === 'firstName' || fieldName === 'all') {
+      errorsValues.firstName = handleValidName(values.firstName);
     }
+    if (fieldName === 'middleName' || fieldName === 'all') {
+      errorsValues.middleName = handleValidName(values.middleName);
+    }
+    if (fieldName === 'lastName' || fieldName === 'all') {
+      errorsValues.lastName = handleValidName(values.lastName);
+    }
+    if (fieldName === 'email' || fieldName === 'all') {
+      errorsValues.email = handleValidEmail(values.email);
+    }
+    if (fieldName === 'phone' || fieldName === 'all') {
+      errorsValues.phone = handleValidPhone(values.phone, 11);
+    }
+
     const foundErrorsValues = Object.keys(errorsValues).find(
       (key) => errorsValues[key as keyof IFormInputContact] !== '',
     );

@@ -37,7 +37,7 @@ const ModalContactDelete: React.FC<IModalContactDeleteProps> = ({ onClose, open,
       onClose={onClose}
       open={open}
     >
-      <h2>Вы дествительно хотите удалить контакт ?</h2>
+      <h2>Вы действительно хотите удалить контакт ?</h2>
       {loading ? (
         <Spinner />
       ) : (

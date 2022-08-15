@@ -1,4 +1,47 @@
 {
-  "authUsers": [],
-  "contacts": []
+  "authUsers": [
+    {
+      "email": "vladimir.ryazancev13@gmail.com",
+      "name": "Владимир",
+      "password": "12345",
+      "token": "1660578250173",
+      "id": 1
+    },
+    {
+      "email": "ivan@ivan.com",
+      "name": "Иван",
+      "password": "12345",
+      "token": "1660582567144",
+      "id": 2
+    }
+  ],
+  "contacts": [
+    {
+      "firstName": "Владимир",
+      "lastName": "Анатольевич",
+      "middleName": "Рязанцев",
+      "phone": "89529292868",
+      "email": "vladimir.ryazancev13@gmail.com",
+      "token": "1660578250173",
+      "id": 1
+    },
+    {
+      "firstName": "Антон",
+      "lastName": "Антонович",
+      "middleName": "Антонов",
+      "phone": "89999999999",
+      "email": "anton@anton.ru",
+      "token": "1660582567144",
+      "id": 2
+    },
+    {
+      "firstName": "Елена",
+      "lastName": "Ивановна",
+      "middleName": "Иванова",
+      "phone": "77777777777",
+      "email": "elena@elena.ru",
+      "token": "1660582567144",
+      "id": 3
+    }
+  ]
 }
