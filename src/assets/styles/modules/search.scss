@@ -1,0 +1,15 @@
+.search {
+  max-width: 350px;
+  width: 100%;
+  @include xs {
+    max-width: 100%;
+  }
+
+  .default-input .input {
+    padding: 10px;
+  }
+
+  .default-input label {
+    color: $color-accent;
+  }
+}

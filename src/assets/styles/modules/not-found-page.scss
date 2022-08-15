@@ -1,0 +1,24 @@
+.not-found-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    fill: $color-accent;
+  }
+
+  h2.title {
+    text-align: center;
+    font-size: $font-size-medium;
+    line-height: 34px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: $color-light;
+    @include xs {
+      font-size: $font-size-main;
+      line-height: 24px;
+    }
+  }
+}

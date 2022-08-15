@@ -1,0 +1,11 @@
+.add-contact-modal {
+  &__overlay, &__container {
+    animation-fill-mode: forwards !important;
+  }
+
+  &__container {
+    .contact-item {
+      padding: 0;
+    }
+  }
+}

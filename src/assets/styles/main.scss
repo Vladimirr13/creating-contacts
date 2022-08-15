@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@import 'vars';
+@import 'modules/media-queries';
+@import 'modules/header';
+@import 'modules/search';
+@import 'modules/authorization';
+@import 'modules/contact-item';
+@import 'modules/add-contact-modal';
+@import 'modules/default-input';
+@import 'modules/default-input';
+@import 'modules/spinner';
+@import 'modules/home-page';
+@import 'modules/delete-contact-modal';
+@import 'modules/not-found-page';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #fff;
+  font-weight: 400;
+  font-size: $font-size-medium;
+  font-family: Montserrat, sans-serif;
+  line-height: 1.5;
+  background: $color-main;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f9f9fd;
+  position: relative;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a5a5a5;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+  background-color: #f9f9fd;
+}
+
+
+@mixin button-default {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 110px;
+  padding: 5px 10px;
+  color: $color-main;
+  font-size: $font-size-main;
+  line-height: 20px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+.main-button {
+  @include button-default;
+  background: linear-gradient(135deg, #fbb03b -2%, #e08814 115%);
+  box-shadow: 0 0 30px 0 rgba(251, 176, 59, .5);
+
+  &_loading {
+    position: relative;
+
+    > span {
+      opacity: 0;
+    }
+  }
+
+  @media ($hover) {
+    &:hover {
+      background: linear-gradient(135deg, #fbb03b -2%, #e08814 115%);
+      box-shadow: none;
+    }
+  }
+}
+
+.empty-button {
+  @include button-default;
+  background: transparent;
+  border: 2px solid #e08814;
+  box-shadow: none;
+
+  @media ($hover) {
+    &:hover {
+      background: rgba(224, 136, 20, .2);
+      border: 2px solid transparent;
+      box-shadow: none;
+    }
+  }
+}
+
+button {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+h1.title {
+  font-size: $font-size-big;
+  line-height: 34px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: $color-light;
+  @include xs {
+    font-size: $font-size-accent;
+    line-height: 24px;
+    margin-bottom: 10px;
+  }
+}
+
+
+.react-responsive-modal-modal {
+  border-radius: 10px;
+  max-width: 600px !important;
+  width: 100%;
+  @include xs {
+    margin: 0!important;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: $font-size-medium;
+    line-height: 34px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: $color-main;
+    @include xs {
+      font-size:$font-size-main;
+      line-height: 24px;
+    }
+  }
+}
+
+.main-wrapper {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}

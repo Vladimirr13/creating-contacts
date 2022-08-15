@@ -1,0 +1,47 @@
+.home-page {
+  padding: 10px;
+
+  &__wrapper-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: $color-main;
+    z-index: 1;
+    @include xs {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  &__add-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    padding: 10px;
+    margin: 0px -10px;
+    background-color: $color-main;
+
+    button {
+      width: 100%;
+      min-height: 50px;
+      text-transform: uppercase;
+    }
+  }
+
+  &__not-found-contacts {
+    text-align: center;
+    padding: 10px 10px 40px 10px;
+    color: $color-light;
+    font-weight: bold;
+    font-size: $font-size-medium;
+  }
+
+  &__loading-contacts {
+    margin: 40px auto;
+    display: block;
+  }
+}

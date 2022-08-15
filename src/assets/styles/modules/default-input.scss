@@ -1,0 +1,157 @@
+.default-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+
+  @include xs {
+    margin-bottom: 10px;
+  }
+
+  label {
+    color: $color-main;
+    font-weight: 400;
+    font-size: $font-size-main;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    @include xs {
+      font-size: $font-size-small;
+    }
+  }
+
+  .input {
+    padding: 10px 40px 10px 10px;
+    width: 100%;
+    height: 40px;
+    outline: none;
+    border: 2px solid #f2f2f2;
+    border-radius: 4px;
+    font-weight: normal;
+    font-size:  $font-size-main;
+    @include xs {
+      height: 30px;
+      font-size: $font-size-small;
+    }
+
+    &_textarea {
+      height: 230px;
+      resize: none;
+    }
+
+    &.no-valid-input {
+      background: #ffebf2;
+      border-color: #ffb8d1;
+    }
+
+    &:disabled {
+      color: #9d9d9d;
+      background-color: #e8e0e0;
+    }
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__control-icon {
+    cursor: pointer;
+
+    &-pass {
+      right: 30px !important;
+    }
+
+    &.last {
+      right: 30px !important;
+
+    }
+
+    &.string-icon {
+      font-size: 14px;
+      color: #b1b1b1 !important;
+    }
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+
+    &.no-valid-input {
+      .icon {
+        background: $color-attention;
+        transform: rotate(45deg);
+
+        &:before {
+          top: 50%;
+          left: 50%;
+          width: 2px;
+          height: 7px;
+          background: #fff;
+          transform: translate(-50%, -50%);
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 7px;
+          height: 2px;
+          background: #fff;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    &.valid-input {
+      .icon {
+        background: #b4c933;
+
+        &:before {
+          top: calc(50% - 1px);
+          left: 50%;
+          width: 4px;
+          height: 6px;
+          transform: translate(-50%, -50%) rotate(45deg);
+          border-bottom: 1px solid #fff;
+          border-right: 1px solid #fff;
+        }
+      }
+    }
+
+    .icon {
+      position: relative;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+
+      &:before {
+        content: "";
+        position: absolute;
+      }
+    }
+  }
+
+  &__pass-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 1;
+    transform: translateY(-50%);
+
+    svg {
+      @media ($hover) {
+        fill: #1a1a1a;
+      }
+    }
+  }
+
+  &__error-text {
+    color: $color-attention;
+    font-size: $font-size-min;
+  }
+}

@@ -1,0 +1,11 @@
+.delete-contact-modal {
+  &__overlay, &__container {
+    animation-fill-mode: forwards !important;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}

@@ -1,0 +1,135 @@
+$tools-min-width: 130px;
+.contact-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+
+
+  &:not(:last-of-type) {
+    margin-bottom: 10px;
+  }
+
+  &__wrapper {
+    height: 100%;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    color: $color-main;
+    height: 100%;
+    cursor: pointer;
+
+    &.active {
+      border-bottom: 2px dashed $color-main;
+      @include xs {
+        border-bottom: 2px dashed $color-main;
+      }
+    }
+
+    @include xs {
+      flex-direction: column;
+    }
+  }
+
+  &__tools, &__name {
+    padding: 30px 10px;
+    @include xs {
+      padding: 10px;
+    }
+  }
+
+  &__name {
+    width: calc(100% - $tools-min-width);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @include xs {
+      width: 100%;
+      font-size: $font-size-main;
+    }
+  }
+
+  &__tools {
+    min-width: $tools-min-width;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    @include xs {
+      $tools-min-width: 100%;
+      min-width: $tools-min-width
+    }
+
+    &-button {
+      display: flex;
+      width: 40px;
+      background: none;
+      cursor: pointer;
+      border: none;
+      @include xs {
+        width: 30px;
+      }
+
+      &:not(:last-of-type) {
+        margin-right: 10px;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: $color-main;
+        transition: all 0.3s linear;
+        @include xs {
+          width: 15px;
+          height: 15px;
+        }
+
+        &.active {
+          fill: $color-accent;
+
+          &.icon-show {
+            transform: rotate(180deg);
+            transition: all 0.3s linear;
+          }
+        }
+      }
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+
+    &.active {
+      padding: 10px;
+      opacity: 1;
+      max-height: 1000px;
+      transition: all 0.3s ease, opacity 1s ease;
+      margin-top: 5px;
+    }
+
+    &.inactive {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: all 0.3s ease, opacity 1s ease;
+    }
+
+    &.show {
+      filter: grayscale(90%) opacity(40%);
+      pointer-events: none;
+    }
+
+    .main-button {
+      max-width: 300px;
+      width: 100%;
+      margin: 0 auto;
+      @include xs {
+        font-size: $font-size-small;
+        min-height: 35px;
+      }
+    }
+  }
+}

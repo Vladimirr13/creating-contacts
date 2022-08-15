@@ -1,0 +1,11 @@
+{
+  "extends": ["tslint:recommended", "tslint-react"],
+  "rules": {
+    "jsx-no-lambda": false,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "prefer-for-of": false
+  },
+  "linterOptions": {
+    "exclude": ["src/react-app-env.d.ts", "src/reportWebVitals.ts", "setupTests.ts"]
+  }
+}
