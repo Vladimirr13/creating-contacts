@@ -5,6 +5,7 @@ import IconDelete from '../../assets/icons/icon-delete.svg';
 import IconArrow from '../../assets/icons/icon-arrow.svg';
 import { IContactsData } from '../../api/interfaces/IContacts';
 import ContactsService from '../../services/ContactsService';
+import UserService from '../../services/UserService';
 import ModalContactDelete from './ModalContactDelete';
 import DefaultInput from '../Base/DefaultInput';
 import Spinner from '../Base/Spinner';
@@ -29,6 +30,7 @@ interface IContactItemProps {
 
 const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, addSuccess }) => {
   const { addNewContact, updateContactItem } = ContactsService;
+  const { userInfo } = UserService;
   const [showContact, setShowContact] = useState<boolean>(false);
   const [showModalDeleteContact, setShowModalDeleteContact] = useState<boolean>(false);
   const [idDeleteContact, setIdDeleteContact] = useState<number | null>(null);
@@ -40,6 +42,7 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
     middleName: contact?.middleName || '',
     phone: contact?.phone || '',
     email: contact?.email || '',
+    token: userInfo?.token,
   };
 
   const [formValues, setFormValues] = useState<IContactsData>(initialFormValues);
@@ -103,7 +106,7 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
       value = value.replace(/\D/g, '');
     }
     setFormValues((prevState) => {
-      const localValues = { ...prevState, [name]: value };
+      const localValues = { ...prevState, [name]: value.trim() };
       validate(localValues);
       return { ...localValues };
     });

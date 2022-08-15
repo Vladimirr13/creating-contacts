@@ -9,7 +9,7 @@ import Spinner from '../../components/Base/Spinner';
 import { toast } from 'react-toastify';
 import UserService from '../../services/UserService';
 
-const Home = () => {
+const Home: React.FC = () => {
   const { getContactsList, contactsList } = ContactsService;
   const { userInfo } = UserService;
   const [contacts, setContacts] = useState<IContactsData[]>([]);
@@ -17,8 +17,10 @@ const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    handleGetContactsList();
-  }, []);
+    if (userInfo) {
+      handleGetContactsList();
+    }
+  }, [userInfo]);
   const handleGetContactsList = async (): Promise<void> => {
     try {
       setLoading(true);
@@ -50,7 +52,6 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="home-page__wrapper-title">
-        {userInfo?.name}
         <h1 className="title">Список контактов</h1>
         <Search setQuery={handleQuerySearch} />
       </div>

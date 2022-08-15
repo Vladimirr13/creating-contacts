@@ -13,7 +13,7 @@ const RegisterForm: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = event.target;
     setFormValues((prevState) => {
-      const localValues = { ...prevState, [name]: value };
+      const localValues = { ...prevState, [name]: value.trim() };
       validate(localValues, name);
       return { ...localValues };
     });

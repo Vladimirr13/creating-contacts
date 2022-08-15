@@ -1,9 +1,13 @@
 import { apiInstance } from '../api';
 import { IContactsData } from '../interfaces/IContacts';
 
-export const contacts = async (): Promise<IContactsData[]> => {
+export const contacts = async (token: string): Promise<IContactsData[]> => {
   try {
-    const res = await apiInstance().get(`contacts`);
+    const res = await apiInstance().get(`contacts`, {
+      params: {
+        token,
+      },
+    });
     return res.data;
   } catch (e) {
     throw e;

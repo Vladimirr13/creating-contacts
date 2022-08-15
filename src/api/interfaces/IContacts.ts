@@ -1,5 +1,6 @@
 export interface IContactsData {
   id?: number;
+  token?: string;
   firstName: string;
   middleName: string;
   lastName: string;

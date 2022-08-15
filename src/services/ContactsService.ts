@@ -1,6 +1,7 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { IContactsData } from '../api/interfaces/IContacts';
 import { addContact, contacts, deleteContact, editContact } from '../api/actions/contacts';
+import UserService from './UserService';
 
 class ContactsService {
   contactsList: IContactsData[] | [];
@@ -18,12 +19,12 @@ class ContactsService {
 
   getContactsList = async (): Promise<IContactsData[]> => {
     try {
-      const contactsList = await contacts();
-      if (contactsList.length) {
-        runInAction(() => {
-          this.contactsList = contactsList;
-        });
-      }
+      const contactsList = await contacts(UserService.userInfo?.token || '');
+
+      runInAction(() => {
+        this.contactsList = contactsList;
+      });
+
       return contactsList;
     } catch (e) {
       throw e;

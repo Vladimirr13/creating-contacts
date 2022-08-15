@@ -71,6 +71,15 @@ $tools-min-width: 130px;
       @include xs {
         width: 30px;
       }
+      @media ($hover) {
+        &:hover {
+          svg {
+            fill: $color-accent;
+          }
+
+        }
+
+      }
 
       &:not(:last-of-type) {
         margin-right: 10px;

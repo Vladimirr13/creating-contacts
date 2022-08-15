@@ -1,25 +1,4 @@
 {
-  "authUsers": [
-    {
-      "id": 1,
-      "user": "name",
-      "token": "test"
-    },
-    {
-      "email": "test@test.ry",
-      "password": "3453",
-      "token": "test@test.ry3453",
-      "id": 2
-    }
-  ],
-  "contacts": [
-    {
-      "firstName": "Владимир",
-      "lastName": "Анатольевич",
-      "middleName": "Рязанцев",
-      "phone": "89529292868",
-      "email": "vladimir.ryazancev13@gmail.com",
-      "id": 1
-    }
-  ]
+  "authUsers": [],
+  "contacts": []
 }
