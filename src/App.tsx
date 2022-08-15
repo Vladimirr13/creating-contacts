@@ -10,13 +10,24 @@ import HistoryService from './services/HistoryService';
 import Layout from './components/Layout';
 import { ToastContainer } from 'react-toastify';
 import NotFoundPage from './pages/NotFoundPage';
+import UserService from './services/UserService';
 
 const App: React.FC = () => {
-  const { loggedIn, initLoggedIn } = AuthorizationService;
+  const { loggedIn, initLoggedIn, userLogout } = AuthorizationService;
+  const { getUserInfo } = UserService;
+
   useEffect(() => {
     LoggedInEventSubscriptionService.subscribe();
     if (loggedIn) {
-      initLoggedIn();
+      const token = localStorage.getItem('token');
+      if (token) {
+        getUserInfo({ token }).then((dataUser) => {
+          if (dataUser[0]?.token !== token) {
+            userLogout();
+          }
+          initLoggedIn();
+        });
+      }
     }
     return () => {
       LoggedInEventSubscriptionService.unsubscribe();

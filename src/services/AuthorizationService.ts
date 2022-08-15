@@ -12,6 +12,7 @@ class AuthorizationService {
       userLogout: action,
       authUser: action,
       loggedIn: computed,
+      setToken: action,
     });
     this.userIsAuthorized = false;
     this.initLoggedIn();
@@ -32,11 +33,17 @@ class AuthorizationService {
     return this.userIsAuthorized;
   }
 
+  setToken = (token: string) => {
+    if (token.length) {
+      localStorage.setItem('token', token);
+    }
+  };
+
   authUser = async (userData: IAuthUserData): Promise<IAuthUserData> => {
     try {
       const infoUser = await authorization(userData);
       if (infoUser?.token?.length) {
-        localStorage.setItem('token', infoUser?.token);
+        this.setToken(infoUser.token);
       }
       return infoUser;
     } catch (e) {

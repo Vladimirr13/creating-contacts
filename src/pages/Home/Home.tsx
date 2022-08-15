@@ -7,9 +7,11 @@ import { observer } from 'mobx-react';
 import Search from '../../components/Search/Search';
 import Spinner from '../../components/Base/Spinner';
 import { toast } from 'react-toastify';
+import UserService from '../../services/UserService';
 
 const Home = () => {
   const { getContactsList, contactsList } = ContactsService;
+  const { userInfo } = UserService;
   const [contacts, setContacts] = useState<IContactsData[]>([]);
   const [showAddNewContactModal, setShowAddNewContactModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,6 +50,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="home-page__wrapper-title">
+        {userInfo?.name}
         <h1 className="title">Список контактов</h1>
         <Search setQuery={handleQuerySearch} />
       </div>
