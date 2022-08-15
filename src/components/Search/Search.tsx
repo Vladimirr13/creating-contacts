@@ -10,11 +10,7 @@ interface ISearchProps {
 const Search: React.FC<ISearchProps> = ({ setQuery }) => {
   const { contactsList } = ContactsService;
   const [value, setValue] = useState<string>('');
-  const handleQuery = (
-    name: string,
-    withoutSpaces: boolean,
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const handleQuery = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const querySearch = event.target.value;
     setValue(querySearch);
     const contactsListFiltered = contactsList.filter(
@@ -33,7 +29,6 @@ const Search: React.FC<ISearchProps> = ({ setQuery }) => {
         name="search"
         label="Поиск"
         required={false}
-        withoutSpaces={false}
         onChange={handleQuery}
         placeholder="ФИО"
         type="search"

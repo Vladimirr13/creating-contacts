@@ -66,18 +66,13 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
   );
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    let hasErrors = false;
 
     if (memoizedIsEqualContactsObjects) {
       toast.error(`Данные не изменились`);
-      hasErrors = true;
+      return;
     }
 
     if (!validate(formValues)) {
-      hasErrors = true;
-    }
-
-    if (hasErrors) {
       return;
     }
     try {
@@ -101,17 +96,14 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
     }
   };
 
-  const handleChange = (
-    name: string,
-    withoutSpaces: boolean,
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name } = event.target;
     let value = event.target.value;
     if (name === 'phone') {
       value = value.replace(/\D/g, '');
     }
     setFormValues((prevState) => {
-      const localValues = { ...prevState, [name]: withoutSpaces ? value.trim() : value };
+      const localValues = { ...prevState, [name]: value };
       validate(localValues);
       return { ...localValues };
     });
@@ -251,7 +243,6 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
                 name="firstName"
                 label="Имя"
                 required={true}
-                withoutSpaces={true}
                 onChange={handleChange}
                 placeholder="Имя"
                 type="text"
@@ -265,7 +256,6 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
                 name="middleName"
                 label="Фамилия"
                 required={true}
-                withoutSpaces={true}
                 onChange={handleChange}
                 placeholder="Фамилия"
                 type="text"
@@ -279,7 +269,6 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
                 name="lastName"
                 label="Отчество"
                 required={true}
-                withoutSpaces={true}
                 onChange={handleChange}
                 placeholder="Отчество"
                 type="text"
@@ -293,7 +282,6 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
                 name="phone"
                 label="Телефон"
                 required={true}
-                withoutSpaces={true}
                 onChange={handleChange}
                 placeholder="Телефон"
                 type="text"
@@ -307,7 +295,6 @@ const ContactItem: React.FC<IContactItemProps> = ({ contact, addNewModelStatus, 
                 name="email"
                 label="E-mail"
                 required={true}
-                withoutSpaces={true}
                 onChange={handleChange}
                 placeholder="E-mail"
                 type="text"

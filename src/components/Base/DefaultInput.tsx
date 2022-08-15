@@ -1,48 +1,31 @@
-import React, { useState } from 'react';
+import React, { InputHTMLAttributes, useState } from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 import iconPass from '../../assets/icons/icon-pass.svg';
 import Spinner from './Spinner';
 
-interface IDefaultInput {
-  value?: string | number;
-  name: string;
+interface IDefaultInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  required: boolean;
-  withoutSpaces: boolean;
-  onChange: (
-    name: string,
-    withoutSpaces: boolean,
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => void;
   error?: string;
-  placeholder: string;
   type: string;
-  autoComplete?: string;
   containerClassName?: string;
   inputClassName?: string;
   showIcon?: boolean;
   loading?: boolean;
   errorInfo?: string;
-  disabled?: boolean;
 }
 
-const DefaultInput: React.FC<IDefaultInput> = ({
-  value,
-  name,
+const DefaultInput: React.FC<IDefaultInputProps> = ({
   label = '',
   required = false,
-  withoutSpaces = false,
-  onChange,
   error,
-  placeholder = '...',
   type = 'text',
-  autoComplete = 'off',
   containerClassName,
   inputClassName,
   showIcon = true,
   loading = false,
   disabled,
+  ...props
 }) => {
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
 
@@ -58,14 +41,10 @@ const DefaultInput: React.FC<IDefaultInput> = ({
       </label>
       <div className="default-input__input-wrapper">
         <input
+          {...props}
           readOnly={disabled}
           disabled={disabled}
           type={passwordShown ? 'text' : type}
-          placeholder={placeholder}
-          name={name}
-          value={value}
-          autoComplete={autoComplete}
-          onChange={(event) => onChange(name, withoutSpaces, event)}
           className={`input
                  ${error ? 'no-valid-input' : ''} ${inputClassName || ''}`}
         />

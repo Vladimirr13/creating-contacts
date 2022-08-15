@@ -23,15 +23,11 @@ const Authorization: React.FC = () => {
   }, []);
 
   const [loading, setLoading] = useState<boolean>(false);
-  const handleChange = (
-    name: string,
-    withoutSpaces: boolean,
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    const { value } = event.target;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { value, name } = event.target;
     setFormValues((prevState) => {
-      const localValues = { ...prevState, [name]: withoutSpaces ? value.trim() : value };
-      validate(localValues);
+      const localValues = { ...prevState, [name]: value };
+      validate(localValues, name);
       return { ...localValues };
     });
   };
@@ -45,12 +41,8 @@ const Authorization: React.FC = () => {
   });
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    let hasErrors = false;
-    if (!validate(formValues)) {
-      hasErrors = true;
-    }
 
-    if (hasErrors) {
+    if (!validate(formValues, 'all')) {
       return;
     }
     try {
@@ -66,22 +58,27 @@ const Authorization: React.FC = () => {
       setLoading(false);
     }
   };
-  const validate = (values: IFormInput): boolean => {
+  const validate = (values: IFormInput, fieldName: string): boolean => {
     const errorsValues: IFormInput = {
       email: '',
       password: '',
     };
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (values.email === '') {
-      errorsValues.email = 'Не может быть пустым';
-    } else if (!regex.test(values.email)) {
-      errorsValues.email = 'Неверный формат электронной почты';
+    if (fieldName === 'email' || fieldName === 'all') {
+      if (values.email === '') {
+        errorsValues.email = 'Не может быть пустым';
+      } else if (!regex.test(values.email)) {
+        errorsValues.email = 'Неверный формат электронной почты';
+      }
     }
-    if (values.password === '') {
-      errorsValues.password = 'Не может быть пустым';
-    } else if (values.password.length < 4) {
-      errorsValues.password = 'Пароль должен содержать минимум 4 символа';
+    if (fieldName === 'password' || fieldName === 'all') {
+      if (values.password === '') {
+        errorsValues.password = 'Не может быть пустым';
+      } else if (values.password.length < 4) {
+        errorsValues.password = 'Пароль должен содержать минимум 4 символа';
+      }
     }
+
     const foundErrorsValues = Object.keys(errorsValues).find(
       (key) => errorsValues[key as keyof IFormInput] !== '',
     );
@@ -99,7 +96,6 @@ const Authorization: React.FC = () => {
               name="email"
               label="E-mail"
               required={true}
-              withoutSpaces={true}
               onChange={handleChange}
               error={formErrors.email}
               placeholder="email"
@@ -114,7 +110,6 @@ const Authorization: React.FC = () => {
               name="password"
               label="Пароль"
               required={true}
-              withoutSpaces={true}
               onChange={handleChange}
               error={formErrors.password}
               placeholder="Пароль"
